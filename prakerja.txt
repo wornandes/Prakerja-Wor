@@ -2,3 +2,4 @@ Ini berasal dari remote
 Ini berasal dari clone
 Ini berasal dari conflict remote
 Ini membuat branch
+Ini branch feature A
