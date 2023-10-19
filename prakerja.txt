@@ -1,1 +1,2 @@
 Ini berasal dari remote
+Ini berasal dari clone
