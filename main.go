@@ -4,67 +4,40 @@ import (
 	"fmt"
 )
 
-// func isPrime(n int) bool {
-// 	if n <= 1 {
-// 		return false
-// 	}
-// 	if n == 2 {
-// 		return true
-// 	}
-// 	if n%2 == 0 {
-// 		return false
-// 	}
-// 	for i := 3; i*i <= n; i += 2 {
-// 		if n%i == 0 {
-// 			return false
-// 		}
-// 	}
-// 	return true
-// }
+func ArrayMerge(arrayA, arrayB []string) []string {
+	// your code here
+	merged := make(map[string]bool)
+	result := []string{}
 
-// func main() {
-// 	var num int
-// 	fmt.Print("Masukkan sebuah angka: ")
-// 	fmt.Scan(&num)
-
-// 	if isPrime(num) {
-// 		fmt.Printf("%d adalah bilangan prima\n", num)
-// 	} else {
-// 		fmt.Printf("%d bukan bilangan prima\n", num)
-// 	}
-// }
-
-func main() {
-	var num int
-
-	fmt.Print("Masukkan angka: ")
-	fmt.Scan(&num)
-
-	if num%7 == 0 {
-		fmt.Printf("%d adalah kelipatan 7\n", num)
-	} else {
-		fmt.Printf("%d bukan kelipatan 7\n", num)
+	for _, item := range arrayA {
+		merged[item] = true
 	}
+
+	for _, item := range arrayB {
+		if _, ok := merged[item]; !ok {
+			merged[item] = true
+		}
+	}
+
+	for item := range merged {
+		result = append(result, item)
+	}
+
+	return result
+
 }
-
-// func hitungLuasTrapesium(alas, atas, tinggi float64) float64 {
-// 	luas := 0.5 * (alas + atas) * tinggi
-// 	return luas
-// }
-
-// func main() {
-// 	var alas, atas, tinggi float64
-
-// 	fmt.Print("Masukkan panjang alas: ")
-// 	fmt.Scan(&alas)
-
-// 	fmt.Print("Masukkan panjang atas: ")
-// 	fmt.Scan(&atas)
-
-// 	fmt.Print("Masukkan tinggi: ")
-// 	fmt.Scan(&tinggi)
-
-// 	luas := hitungLuasTrapesium(alas, atas, tinggi)
-
-// 	fmt.Printf("Luas trapesium adalah: %.2f\n", luas)
-// }
+func main() {
+	// Test cases
+	fmt.Println(ArrayMerge([]string{"king", "devil jin", "akuma"}, []string{"eddie", "steve", "geese"}))
+	// ["king", "devil jin", "akuma", "eddie", "steve", "geese"]
+	fmt.Println(ArrayMerge([]string{"sergei", "jin"}, []string{"jin", "steve", "bryan"}))
+	// ["sergei", "jin", "steve", "bryan"]
+	fmt.Println(ArrayMerge([]string{"alisa", "yoshimitsu"}, []string{"devil jin", "yoshimitsu", "alisa",
+		"law"}))
+	// ["alisa", "yoshimitsu", "devil jin", "law"]
+	fmt.Println(ArrayMerge([]string{}, []string{"devil jin", "sergei"}))
+	// ["devil jin", "sergei"]
+	fmt.Println(ArrayMerge([]string{"hwoarang"}, []string{}))
+	// ["hwoarang"]
+	fmt.Println(ArrayMerge([]string{}, []string{}))
+}
