@@ -1,83 +1,117 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
-// func ArrayMerge(arrayA, arrayB []string) []string {
-// 	// your code here
-// 	merged := make(map[string]bool)
-// 	result := []string{}
+// type Car struct {
+// 	// Properti type dan fuelIn sesuai dengan spesifikasi
+// 	Type   string
+// 	FuelIn float64
+// }
 
-// 	for _, item := range arrayA {
-// 		merged[item] = true
+// // Method untuk menghitung perkiraan jarak yang bisa ditempuh
+// func (car *Car) CalculateEstimatedDistance() float64 {
+// 	// 1.5 L / mill adalah konversi dari 1 L / km
+// 	return car.FuelIn / 1.5
+// }
+
+// func main() {
+// 	myCar := Car{
+// 		Type:   "Sedan",
+// 		FuelIn: 60.0, // Misalnya, terdapat 60 liter bahan bakar
 // 	}
 
-// 	for _, item := range arrayB {
-// 		if _, ok := merged[item]; !ok {
-// 			merged[item] = true
+// 	estimatedDistance := myCar.CalculateEstimatedDistance()
+
+// 	fmt.Printf("Mobil %s bisa menempuh perkiraan jarak %.2f km\n", myCar.Type, estimatedDistance)
+// }
+
+// Function untuk mencari nilai maksimum dan minimum
+// func findMaxMin(numbers []int) (max, min int) {
+// 	max = numbers[0]
+// 	min = numbers[0]
+
+// 	for _, num := range numbers {
+// 		if num > max {
+// 			max = num
+// 		}
+// 		if num < min {
+// 			min = num
 // 		}
 // 	}
 
-// 	for item := range merged {
-// 		result = append(result, item)
+// 	return max, min
+// }
+
+// func main() {
+// 	var numbers [6]int
+
+// 	fmt.Println("Masukkan 6 angka:")
+// 	for i := 0; i < 6; i++ {
+// 		fmt.Scan(&numbers[i])
 // 	}
 
-// 	return result
+// 	max, min := findMaxMin(numbers[:])
 
-// }
-// func main() {
-// 	// Test cases
-// 	fmt.Println(ArrayMerge([]string{"king", "devil jin", "akuma"}, []string{"eddie", "steve", "geese"}))
-// 	// ["king", "devil jin", "akuma", "eddie", "steve", "geese"]
-// 	fmt.Println(ArrayMerge([]string{"sergei", "jin"}, []string{"jin", "steve", "bryan"}))
-// 	// ["sergei", "jin", "steve", "bryan"]
-// 	fmt.Println(ArrayMerge([]string{"alisa", "yoshimitsu"}, []string{"devil jin", "yoshimitsu", "alisa",
-// 		"law"}))
-// 	// ["alisa", "yoshimitsu", "devil jin", "law"]
-// 	fmt.Println(ArrayMerge([]string{}, []string{"devil jin", "sergei"}))
-// 	// ["devil jin", "sergei"]
-// 	fmt.Println(ArrayMerge([]string{"hwoarang"}, []string{}))
-// 	// ["hwoarang"]
-// 	fmt.Println(ArrayMerge([]string{}, []string{}))
+// 	fmt.Printf("Nilai maksimum: %d\n", max)
+// 	fmt.Printf("Nilai minimum: %d\n", min)
 // }
 
-// func Mapping(slice []string) map[string]int {
-// 	m := make(map[string]int)
-// 	for _, item := range slice {
-// 		m[item]++
-// 	}
-// 	return m
-// }
-// func main() {
-// 	fmt.Println(Mapping([]string{"asd", "qwe", "asd", "adi", "qwe", "qwe"})) //map[adi:1 asd:2 qwe:3]
-// 	fmt.Println(Mapping([]string{"asd", "qwe", "asd"}))                      //map[asd:2 qwe:1]
-// 	fmt.Println(Mapping([]string{}))                                         //map[]
-// }
+type Student struct {
+	Name  string
+	Score int
+}
 
-func munculSekali(angka string) []int {
-	counter := make(map[int]int)
+type Students []Student
 
-	for _, digit := range angka {
-		num, _ := strconv.Atoi(string(digit))
-		counter[num]++
+func (s Students) CalculateAverage() float64 {
+	total := 0
+	for _, student := range s {
+		total += student.Score
 	}
+	return float64(total) / float64(len(s))
+}
 
-	angkaUnik := []int{}
-	for num, count := range counter {
-		if count == 1 {
-			angkaUnik = append(angkaUnik, num)
+func (s Students) FindMin() Student {
+	minStudent := s[0]
+	for _, student := range s {
+		if student.Score < minStudent.Score {
+			minStudent = student
 		}
 	}
-
-	return angkaUnik
-
+	return minStudent
 }
+
+func (s Students) FindMax() Student {
+	maxStudent := s[0]
+	for _, student := range s {
+		if student.Score > maxStudent.Score {
+			maxStudent = student
+		}
+	}
+	return maxStudent
+}
+
 func main() {
-	fmt.Println(munculSekali("1234123"))    // [4]
-	fmt.Println(munculSekali("76523752"))   // [6 3]
-	fmt.Println(munculSekali("12345"))      // [1 2 3 4 5]
-	fmt.Println(munculSekali("1122334455")) // []
-	fmt.Println(munculSekali("8872504"))    // [8 7 2 5 4]
+	var students Students
+
+	for i := 0; i < 5; i++ {
+		var name string
+		var score int
+
+		fmt.Printf("Input %d Student's Name: ", i+1)
+		fmt.Scan(&name)
+
+		fmt.Printf("Input %d Student's Score: ", i+1)
+		fmt.Scan(&score)
+
+		students = append(students, Student{Name: name, Score: score})
+	}
+
+	average := students.CalculateAverage()
+	minStudent := students.FindMin()
+	maxStudent := students.FindMax()
+
+	fmt.Printf("\nAverage Score: %.2f\n", average)
+	fmt.Printf("Min Score of Students: %s (%d)\n", minStudent.Name, minStudent.Score)
+	fmt.Printf("Max Score of Students: %s (%d)\n", maxStudent.Name, maxStudent.Score)
 }
